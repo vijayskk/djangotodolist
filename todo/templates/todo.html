@@ -9,12 +9,18 @@
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #f4f4f4;
+    }
+
+    .header {
+        background: linear-gradient(to right, #3498db, #8e44ad);
+        color: #fff;
+        text-align: center;
+        padding: 20px 0;
     }
 
     .container {
         max-width: 600px;
-        margin: 50px auto;
+        margin: 0 auto;
         background-color: #fff;
         border-radius: 8px;
         padding: 20px;
@@ -67,26 +73,47 @@
         padding: 10px 20px;
         border-radius: 0 4px 4px 0;
         border: none;
-        background-color: #007bff;
+        background-color: #3498db;
         color: #fff;
         cursor: pointer;
     }
 
     .add-todo button:hover {
-        background-color: #0056b3;
+        background-color: #2980b9;
+    }
+
+    .footer {
+        background: linear-gradient(to right, #8e44ad, #3498db);
+        color: #fff;
+        text-align: center;
+        padding: 20px 0;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
     }
 </style>
 </head>
 <body>
-<div class="container">
+<div class="header">
     <h1>To-Do List</h1>
+</div>
+<div class="container">
     <ul class="todo-list" id="todoList">
-        <!-- To-Do Items will be added here -->
+        {% for todo in todos %}
+        <li class="todo-item">
+            <input type="checkbox" {% if todo.completed %}checked{% endif %}>
+            <label>{{ todo.note }}</label>
+            <button id="{{ todo.id }}" onclick="removeTodo(this)">Remove</button>
+        </li>
+        {% endfor %}
     </ul>
     <div class="add-todo">
         <input type="text" id="todoInput" placeholder="Add a new to-do">
         <button onclick="addTodo()">Add</button>
     </div>
+</div>
+<div class="footer">
+    <p>&copy; 2024 To-Do List App</p>
 </div>
 
 <script>
@@ -97,20 +124,13 @@
             return;
         }
 
-        var listItem = document.createElement("li");
-        listItem.classList.add("todo-item");
-        listItem.innerHTML = `
-            <input type="checkbox">
-            <label>${inputValue}</label>
-            <button onclick="removeTodo(this)">Remove</button>
-        `;
-        document.getElementById("todoList").appendChild(listItem);
-
-        document.getElementById("todoInput").value = "";
+        fetch(`http://127.0.0.1:8000/addTodo?note=${inputValue}`)
+        location.reload()
     }
 
     function removeTodo(element) {
-        element.parentElement.remove();
+        fetch(`http://127.0.0.1:8000/removeTodo?id=${element.id}`)
+        location.reload()
     }
 </script>
 </body>
