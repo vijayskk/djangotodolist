@@ -126,12 +126,12 @@
         <li class="todo-item">
             <input id="{{ todo.id }}" onclick="checkTodo(this)" type="checkbox" {% if todo.completed %}checked{% endif %}>
             <label>{{ todo.note }}</label>
-            <button id="{{ todo.id }}" onclick="removeTodo(this)">Remove</button>
+            <button type="submit" id="{{ todo.id }}" onclick="removeTodo(this)">Remove</button>
         </li>
         {% endfor %}
     </ul>
     <div class="add-todo">
-        <input type="text" id="todoInput" placeholder="Add a new to-do">
+        <input onsubmit="addTodo()" type="text" id="todoInput" placeholder="Add a new to-do">
         <button onclick="addTodo()">Add</button>
     </div>
 </div>
