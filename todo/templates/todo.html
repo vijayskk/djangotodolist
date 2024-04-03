@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To-Do List</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    .todo-list {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .todo-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .todo-item:last-child {
+        border-bottom: none;
+    }
+
+    .todo-item input[type="checkbox"] {
+        margin-right: 10px;
+    }
+
+    .todo-item label {
+        flex: 1;
+        word-break: break-all;
+    }
+
+    .add-todo {
+        display: flex;
+        margin-top: 20px;
+    }
+
+    .add-todo input[type="text"] {
+        flex: 1;
+        padding: 10px;
+        border-radius: 4px 0 0 4px;
+        border: 1px solid #ddd;
+        border-right: none;
+    }
+
+    .add-todo button {
+        padding: 10px 20px;
+        border-radius: 0 4px 4px 0;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .add-todo button:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>To-Do List</h1>
+    <ul class="todo-list" id="todoList">
+        <!-- To-Do Items will be added here -->
+    </ul>
+    <div class="add-todo">
+        <input type="text" id="todoInput" placeholder="Add a new to-do">
+        <button onclick="addTodo()">Add</button>
+    </div>
+</div>
+
+<script>
+    function addTodo() {
+        var inputValue = document.getElementById("todoInput").value;
+        if (inputValue.trim() === "") {
+            alert("Please enter a to-do item.");
+            return;
+        }
+
+        var listItem = document.createElement("li");
+        listItem.classList.add("todo-item");
+        listItem.innerHTML = `
+            <input type="checkbox">
+            <label>${inputValue}</label>
+            <button onclick="removeTodo(this)">Remove</button>
+        `;
+        document.getElementById("todoList").appendChild(listItem);
+
+        document.getElementById("todoInput").value = "";
+    }
+
+    function removeTodo(element) {
+        element.parentElement.remove();
+    }
+</script>
+</body>
+</html>
