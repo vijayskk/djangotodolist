@@ -101,7 +101,7 @@
     <ul class="todo-list" id="todoList">
         {% for todo in todos %}
         <li class="todo-item">
-            <input type="checkbox" {% if todo.completed %}checked{% endif %}>
+            <input id="{{ todo.id }}" onclick="checkTodo(this)" type="checkbox" {% if todo.completed %}checked{% endif %}>
             <label>{{ todo.note }}</label>
             <button id="{{ todo.id }}" onclick="removeTodo(this)">Remove</button>
         </li>
@@ -130,6 +130,10 @@
 
     function removeTodo(element) {
         fetch(`http://127.0.0.1:8000/removeTodo?id=${element.id}`)
+        location.reload()
+    }
+    function checkTodo(element){
+        fetch(`http://127.0.0.1:8000/checkTodo?id=${element.id}`)
         location.reload()
     }
 </script>

@@ -46,3 +46,23 @@ def removeTodo(request):
 
     return redirect('/')
 
+def checkTodo(request):
+    if request.method == "GET":
+        f = open('todo/data.json')
+        data = json.load(f)
+        print(data["todos"]) 
+        index = 0
+        res = -1
+        for i in data["todos"]:
+            if i["id"] == request.GET.get('id'):
+                res = index
+            index += 1
+        if res != -1:
+            data["todos"][res]["completed"] = True
+        o = open('todo/data.json','w')
+        json.dump(data,o,indent=6)
+        o.close()
+        f.close()
+
+    return redirect('/')
+
