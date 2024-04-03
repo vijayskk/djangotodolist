@@ -9,10 +9,11 @@
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
+        background-color: #f8f9fa;
     }
 
     .header {
-        background: linear-gradient(to right, #3498db, #8e44ad);
+        background: linear-gradient(to right, #8e44ad, #3498db);
         color: #fff;
         text-align: center;
         padding: 20px 0;
@@ -25,10 +26,12 @@
         border-radius: 8px;
         padding: 20px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.5s ease-out;
     }
 
     h1 {
         text-align: center;
+        margin-bottom: 20px;
     }
 
     .todo-list {
@@ -41,6 +44,7 @@
         align-items: center;
         padding: 10px;
         border-bottom: 1px solid #ddd;
+        animation: slideIn 0.5s ease-out;
     }
 
     .todo-item:last-child {
@@ -59,6 +63,7 @@
     .add-todo {
         display: flex;
         margin-top: 20px;
+        animation: slideIn 0.5s ease-out;
     }
 
     .add-todo input[type="text"] {
@@ -73,23 +78,41 @@
         padding: 10px 20px;
         border-radius: 0 4px 4px 0;
         border: none;
-        background-color: #3498db;
+        background-color: #8e44ad;
         color: #fff;
         cursor: pointer;
     }
 
     .add-todo button:hover {
-        background-color: #2980b9;
+        background-color: #6c3483;
     }
 
     .footer {
-        background: linear-gradient(to right, #8e44ad, #3498db);
+        background: linear-gradient(to right, #3498db, #8e44ad);
         color: #fff;
         text-align: center;
         padding: 20px 0;
         position: fixed;
         bottom: 0;
         width: 100%;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateY(-20px);
+        }
+        to {
+            transform: translateY(0);
+        }
     }
 </style>
 </head>
@@ -113,7 +136,7 @@
     </div>
 </div>
 <div class="footer">
-    <p>&copy; 2024 To-Do List App</p>
+    <p>&copy; Vijay Satheesh 2024 To-Do List App</p>
 </div>
 
 <script>
