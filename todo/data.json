@@ -1,3 +1,14 @@
 {
-      "todos": []
+      "todos": [
+            {
+                  "id": "8d77f26a-f1ed-11ee-ad9e-7a876d3dd11c",
+                  "note": "Hello",
+                  "completed": true
+            },
+            {
+                  "id": "47038e6c-f273-11ee-bc38-7a876d3dd11c",
+                  "note": "Hello",
+                  "completed": false
+            }
+      ]
 }

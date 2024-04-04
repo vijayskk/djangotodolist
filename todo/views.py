@@ -2,67 +2,57 @@ from django.http import HttpResponse
 from django.shortcuts import render,redirect
 import uuid
 import json
+import time
+from . import db
 
 def todo(request):
-    f = open('todo/data.json')
-    data = json.load(f)
-    return render(request , "todo.html", {'todos': data["todos"]})
+
+    try:
+        data = db.db.todos.find()
+    except Exception as e:
+        print(e)
+    finally:
+        return render(request , "todo.html", {'todos': data})
 
 def addTodo(request):
     if request.method == "GET":
-        f = open('todo/data.json')
-        data = json.load(f)
-        data["todos"].append({
-            "id":str(uuid.uuid1()),
-            "note":str(request.GET.get('note')),
-            "completed":False
-        })
-        print(data["todos"]) 
-        o = open('todo/data.json','w')
-        json.dump(data,o,indent=6)
-        o.close()
-        f.close()
+            id = str(uuid.uuid1())
+            try:  
+                print("Working")         
+                db.db.todos.insert_one({
+                    "_id":id,
+                    "id":id,
+                    "note":str(request.GET.get('note')),
+                    "completed":False
+                })
+            except Exception as e:
+                print(e)
+            finally:
+                return redirect('/')
 
-    return redirect('/')
 
 
-def removeTodo(request):
+async def removeTodo(request):
     if request.method == "GET":
-        f = open('todo/data.json')
-        data = json.load(f)
-        print(data["todos"]) 
-        index = 0
-        res = -1
-        for i in data["todos"]:
-            if i["id"] == request.GET.get('id'):
-                res = index
-            index += 1
-        if res != -1:
-            data["todos"].pop(res)
-        o = open('todo/data.json','w')
-        json.dump(data,o,indent=6)
-        o.close()
-        f.close()
+        print(request.GET.get('id'))
+        try:
+            db.db.todos.delete_one({"_id":request.GET.get('id')})
+            await time.sleep(1)
+        except Exception as e:
+            print(e)
+        finally:   
+            return redirect('/')
 
     return redirect('/')
 
-def checkTodo(request):
+async def checkTodo(request):
     if request.method == "GET":
-        f = open('todo/data.json')
-        data = json.load(f)
-        print(data["todos"]) 
-        index = 0
-        res = -1
-        for i in data["todos"]:
-            if i["id"] == request.GET.get('id'):
-                res = index
-            index += 1
-        if res != -1:
-            data["todos"][res]["completed"] = True
-        o = open('todo/data.json','w')
-        json.dump(data,o,indent=6)
-        o.close()
-        f.close()
-
-    return redirect('/')
+        print(request.GET.get('id'))
+        try:
+            db.db.todos.update_one({"_id":request.GET.get('id')},{"$set": {"completed": True}})
+            await time.sleep(1)
+        except Exception as e:
+            print(e)
+        finally:   
+            return redirect('/')
 
