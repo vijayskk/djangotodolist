@@ -4,9 +4,11 @@ import uuid
 import json
 import time
 from . import db
+reloadit = False
 
+def reload(request):
+    return redirect('/')
 def todo(request):
-
     try:
         data = db.db.todos.find()
     except Exception as e:
@@ -28,6 +30,7 @@ def addTodo(request):
             except Exception as e:
                 print(e)
             finally:
+                reload(request)
                 return redirect('/')
 
 
@@ -41,9 +44,9 @@ async def removeTodo(request):
         except Exception as e:
             print(e)
         finally:   
+            reload(request)
             return redirect('/')
 
-    return redirect('/')
 
 async def checkTodo(request):
     if request.method == "GET":
@@ -53,6 +56,7 @@ async def checkTodo(request):
             await time.sleep(1)
         except Exception as e:
             print(e)
-        finally:   
+        finally:  
+            reload(request) 
             return redirect('/')
 
